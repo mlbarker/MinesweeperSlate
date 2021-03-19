@@ -13,6 +13,8 @@ void AMenuPlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();
 
+    UE_LOG(LogTemp, Warning, TEXT("SetupInputComponent()"));
+
     if (InputComponent)
     {
         InputComponent->BindAction("OpenMenu", IE_Pressed, this, &AMenuPlayerController::OpenMenu);
@@ -21,10 +23,16 @@ void AMenuPlayerController::SetupInputComponent()
 
 void AMenuPlayerController::OpenMenu()
 {
-    if (AMenuHUD* MenuHUD = Cast<AMenuHUD>(GetHUD()))
+    AMenuHUD* MenuHUD = Cast<AMenuHUD>(GetHUD());
+
+    if (MenuHUD)
     {
         MenuHUD->ShowHUD();
         UE_LOG(LogTemp, Warning, TEXT("Show the Menu"));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Warning, TEXT("MenuHUD is nullptr"));
     }
 }
 

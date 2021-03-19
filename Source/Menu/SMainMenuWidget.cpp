@@ -14,11 +14,19 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 
     const FMargin ContentPadding = FMargin(500.f, 300.f);
     const FMargin ButtonPadding = FMargin(10.f);
+    const FMargin TextBlockPadding = FMargin(20.f);
+
+    const FText WidthText = LOCTEXT("Width", "Width:");
+    const FText HeightText = LOCTEXT("Height", "Height:");
 
     const FText TitleText = LOCTEXT("GameTitle", "Minesweeper");
     const FText PlayText = LOCTEXT("PlayGame", "Play");
     const FText SettingsText = LOCTEXT("Settings", "Settings");
     const FText QuitText = LOCTEXT("QuitGame", "Quit Game");
+
+
+    FSlateFontInfo DimensionTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
+    DimensionTextStyle.Size = 60.f;
 
     FSlateFontInfo ButtonTextStyle = FCoreStyle::Get().GetFontStyle("EmbossedText");
     ButtonTextStyle.Size = 40.f;
@@ -40,61 +48,51 @@ void SMainMenuWidget::Construct(const FArguments& InArgs)
 
             + SOverlay::Slot()
             .HAlign(HAlign_Fill)
+            .VAlign(VAlign_Top)
+            [
+                SNew(SHorizontalBox)
+
+                // width
+                + SHorizontalBox::Slot()
+                [
+                    SNew(STextBlock)
+                    .Font(DimensionTextStyle)
+                    .Text(WidthText)
+                    .Justification(ETextJustify::Right)
+                ]
+
+                // width editable box
+                + SHorizontalBox::Slot()
+                [
+                    SNew(SEditableTextBox)
+                    .Justification(ETextJustify::Left)
+                ]
+
+                // height
+                + SHorizontalBox::Slot()
+                [
+                    SNew(STextBlock)
+                    .Font(DimensionTextStyle)
+                    .Text(HeightText)
+                    .Justification(ETextJustify::Right)
+                ]
+
+                // height editable box
+                + SHorizontalBox::Slot()
+                [
+                    SNew(SEditableTextBox)
+                    .Justification(ETextJustify::Left)
+                ]
+            ]
+
+            + SOverlay::Slot()
+            .HAlign(HAlign_Fill)
             .VAlign(VAlign_Fill)
             .Padding(ContentPadding)
             [
                 SNew(SVerticalBox)
-
-                // title text
                 + SVerticalBox::Slot()
-                [
-                    SNew(STextBlock)
-                    .Font(TitleTextStyle)
-                    .Text(TitleText)
-                    .Justification(ETextJustify::Center)
-                ]
-
-                // play button
-                + SVerticalBox::Slot()
-                .Padding(ButtonPadding)
-                [
-                    SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnPlayClicked)
-                    [
-                        SNew(STextBlock)
-                        .Font(ButtonTextStyle)
-                        .Text(PlayText)
-                        .Justification(ETextJustify::Center)
-                    ]
-                ]
-
-                // settings button
-                + SVerticalBox::Slot()
-                .Padding(ButtonPadding)
-                [
-                    SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnSettingsClicked)
-                    [
-                        SNew(STextBlock)
-                        .Font(ButtonTextStyle)
-                        .Text(SettingsText)
-                        .Justification(ETextJustify::Center)
-                    ]
-                ]
-
-                // quit button
-                + SVerticalBox::Slot()
-                .Padding(ButtonPadding)
-                [
-                    SNew(SButton)
-                    .OnClicked(this, &SMainMenuWidget::OnQuitClicked)
-                    [
-                        SNew(STextBlock)
-                        .Font(ButtonTextStyle)
-                        .Text(QuitText)
-                        .Justification(ETextJustify::Center)
-                    ]
-                ]
+                
             ]
         ];
 }
